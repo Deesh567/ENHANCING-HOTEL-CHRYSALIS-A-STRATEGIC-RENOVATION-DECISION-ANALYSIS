@@ -1,0 +1,64 @@
+-REGRESSION MODELS
+
+<-model1<-lm (Score~Pool.1+Gym.1+Tennis_court.1+Spa.1+Casino.1+Free_internet.1,HR)
+<-model1
+<-summary(model1)
+
+<-model2<-lm (Score~Pool.1+Tennis_court.1+Spa.1+Casino.1+Free_internet.1,HR)
+<-model2
+<-summary(model2)
+
+<-model3<-lm (Score~Pool.1+Spa.1+Casino.1+Free_internet.1,HR)
+<-model3
+<-summary(model3)
+
+<-model4<-lm (Score~Pool.1+Casino.1+Free_internet.1,HR)
+<-model4
+<-summary(model4)
+
+<-model5<-lm (Score~Pool.1+Free_internet.1,HR)
+<-model5
+<-summary(model5)
+
+-ANOVA TEST
+
+<-anova( model1, model2)
+<-anova(model2 , model3)
+<-anova(model3, model4)
+<-anova(model4, model5)
+
+-RMSE AND MAE
+
+<-install.packages("caret")
+<-library(caret)
+<-library(ISLR)
+<-HR
+
+<-partition <- createDataPartition(y=HR$Score , p=0.8 , list= FALSE)
+<-train.data <- HR[partition,]
+<-test.data <- HR[-partition,]
+<-plot(data$Score, data$Pool.1)
+<-abline(lm(Score~Pool.1, HR))
+
+<-model <- lm(Score~Pool.1+Free_internet.1, data=train.data)
+<-predictions <- predict(model,test.data)
+<-rmse <- RMSE(predictions, test.data$Score)
+<-mae <- MAE(predictions, test.data$Score)
+
+-CLASSIFICATION TREE
+
+<-install.packages("ISLR")
+<-install.packages("rpart")
+<-install.packages("rpart.plot")
+<-library(ISLR)
+<-library(rpart)
+<-library(rpart.plot)
+
+
+# myfirsttree <-rpart(Score ~ Pool+Gym+Tennis_court+Spa+Casino+Free_internet,HR)
+<-plot(myfirsttree)
+<-text(myfirsttree)
+<-rpart.plot(myfirsttree,extra=101)
+	
+
+
